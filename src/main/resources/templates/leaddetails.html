@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Deaf Flow Bus</title>
+
+    <style>
+        .jumbotron
+        {
+            padding-top: 30px;
+            padding-left: 5px;
+            padding-bottom:0px;
+            background-size: cover;
+            background: contain;
+            width: 100%; /* make sure to define width to fill container */
+            height: 110%; /* define the height in pixels or make sure   */
+            /* you have something in your div with height */
+            /* so you can see your image */
+            max-width:1400px;  /* define the max width */
+        }
+
+        th {
+            background-color: #94BDF7;
+            color: white;
+        }
+        .logo {
+            max-width: 15%;
+            max-height: 15%;
+            margin-top: 25px;
+        }
+
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #EBF3FF;
+        }
+        .menubutton {
+            float: right;
+            display: inline;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<div class="container">
+    <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
+    <div class="jumbotron bg-white">
+
+        <h2 style="margin-right: 100px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 100px;" class="lead text-center">Universal tool to store your investment leads</p>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header">
+            <h4 style="display: inline-block;"  th:text="${lead.projectName}"/>
+            <a type="button" class="btn btn-outline-danger menubutton" style="margin-left: 5px">&nbsp; Delete &nbsp;</a>
+            <a type="button" class="btn btn-outline-warning menubutton" style="margin-left: 5px">&nbsp; Edit &nbsp;</a>
+            <a type="button" class="btn btn-outline-primary menubutton">&nbsp; Add Note &nbsp;</a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${lead.projectOwner}"/>
+            <p class="text-muted" th:text="${lead.field}"/>
+
+            <ul class="list-group" style="margin-bottom: 30px;">
+                <li class="list-group-item">Email:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.email}"/></li>
+                <li class="list-group-item">Address:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.extraAddress}"/></li>
+                <li class="list-group-item">Is In Progress:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.inProgress}"/></li>
+                <li class="list-group-item">Is in Portfolio:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.inPortfolio}"/></li>
+                <li class="list-group-item">Is Rejected:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.rejected}"/></li>
+                <li class="list-group-item">Date of Arrival:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.dateArrival}"/></li>
+                <li class="list-group-item">Last Modified:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${lead.lastTouched}"/></li>
+            </ul>
+
+            <p class="card-text">Project detailed description:</p>
+            <ul class="list-group" style="margin-bottom: 30px;">
+                <li class="list-group-item"><p style="display: inline;" class="card-text" th:text="${descr.description}"/></li>
+            </ul>
+            <p class="card-text">Attached Files:</p>
+            <div th:each="file : ${files}">
+                <a th:href="@{/api/files(fileId = ${file.id}, type = ${file.fileType})}" th:text="${file.fileName}"/>
+            </div>
+            <div><a>+ Add File</a></div>
+            <div style="margin-bottom: 30px;"> </div>
+
+            <p class="card-text">Notes:</p>
+            <div th:each="note : ${notes}" class="card border-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">Note <p style="display: inline;" th:text="${note.noteId}"/><a style="float: right;" type="button" class="btn btn-outline-danger">Delete</a></div>
+                <div class="card-body text-info">
+                    <p th:text="${note.note}" class="card-text"/>
+                </div>
+            </div>
+
+
+            <a th:href="@{../api}" type="button" class="btn btn-outline-primary" style="margin-top: 20px;">&nbsp; Go Back &nbsp;</a>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
+
+    </div>
+    <div class="row justify-content-md-center">
+        <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+
+security:
+  oauth2:
+    client:
+      client-id: webgui
+      client-secret: ovarkills11
+      user-authorization-uri: http://34.102.169.103/uaa/oauth/authorize
+      access-token-uri:  http://34.102.169.103/uaa/oauth/token
+    resource:
+      token-info-uri: http://34.102.169.103/uaa/oauth/check_token
+
+server:
+  servlet:
+    session:
+      cookie:
+        name: DFB_SESSION2
+  port: 8080
