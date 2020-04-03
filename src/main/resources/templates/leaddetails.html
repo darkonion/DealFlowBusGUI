@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -65,9 +66,40 @@
     <div class="card">
         <div class="card-header">
             <h4 style="display: inline-block;"  th:text="${lead.projectName}"/>
-            <a type="button" class="btn btn-outline-danger menubutton" style="margin-left: 5px">&nbsp; Delete &nbsp;</a>
+            <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/api/delete(leadId = ${lead.id})}" type="button"
+               class="btn btn-outline-danger menubutton" style="margin-left: 5px">&nbsp; Delete &nbsp;</a>
             <a type="button" class="btn btn-outline-warning menubutton" style="margin-left: 5px">&nbsp; Edit &nbsp;</a>
-            <a type="button" class="btn btn-outline-primary menubutton">&nbsp; Add Note &nbsp;</a>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-primary menubutton" data-toggle="modal" data-target="#exampleModal">
+                &nbsp; Add Note &nbsp;
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add New Note</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" th:action="@{/api/lead/{id}/savenote(id = ${lead.id})}" th:object="${newnote}" method="POST">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Message: </label>
+                                    <textarea type="text" th:field="*{note}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <h5 class="card-title" th:text="${lead.projectOwner}"/>
@@ -95,15 +127,17 @@
             <div style="margin-bottom: 30px;"> </div>
 
             <p class="card-text">Notes:</p>
-            <div th:each="note : ${notes}" class="card border-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">Note <p style="display: inline;" th:text="${note.noteId}"/><a style="float: right;" type="button" class="btn btn-outline-danger">Delete</a></div>
-                <div class="card-body text-info">
+            <div th:each="note : ${notes}" class="card border-primary mb-3" style="length: 100%;">
+                <div class="card-header text-primary">Issue Date: <p style="display: inline;" th:text="${note.issueDate}"/>
+                    <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/api/lead/deletenote(leadId = ${lead.id}, noteId = ${note.noteId})}"
+                       style="float: right;" type="button" class="btn btn-outline-danger">&nbsp;Delete&nbsp;</a></div>
+                <div class="card-body">
                     <p th:text="${note.note}" class="card-text"/>
                 </div>
             </div>
 
 
-            <a th:href="@{../api}" type="button" class="btn btn-outline-primary" style="margin-top: 20px;">&nbsp; Go Back &nbsp;</a>
+            <a th:href="@{../api}" type="button" class="btn btn-outline-primary" style="margin-top: 20px;">&nbsp;Go Back&nbsp;</a>
         </div>
     </div>
     <div class="row justify-content-md-center">

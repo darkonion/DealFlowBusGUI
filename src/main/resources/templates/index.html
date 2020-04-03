@@ -39,6 +39,10 @@
             background-color: #EBF3FF;
         }
 
+        .inline {
+            display: inline;
+        }
+
     </style>
 
 </head>
@@ -56,21 +60,34 @@
             <p style="margin-right: 100px;" class="lead text-center">Universal tool to store your investment leads</p>
         </div>
 
-        <div class="btn-group" style="float: right;">
 
-            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;Sort&nbsp;&nbsp;</button>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/api?p=0&filter=4}">Active</a>
-                <a class="dropdown-item" th:href="@{/api?p=0&filter=3}">In Progress</a>
-                <a class="dropdown-item" th:href="@{/api?p=0&filter=2}">In Portfolio</a>
-                <a class="dropdown-item" th:href="@{/api?p=0&filter=1}">Rejected</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" th:href="@{/api?p=0&filter=5}">All</a>
+
+            <div style="float: left;">
+                <!-- Search Form Here -->
+                <form class="form-inline" th:action="@{/api/search}" method="GET">
+                    <div class="form-group mx-sm-3 mb-2" style="float: left;">
+                        <label class="sr-only">Search</label>
+                        <input type="search" name="query" class="form-control  mr-sm-2" placeholder="Project Name/Owner" aria-label="Search">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary mb-2" >&nbsp;Search&nbsp;</button> <p class="text-muted text-nowrap">&nbsp;&nbsp;*case and form sensitive</p>
+                </form>
             </div>
 
-        </div>
+            <div style="float: right;" class="btn-group">
+                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;Sort&nbsp;&nbsp;</button>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/api?p=0&filter=4}">Active</a>
+                    <a class="dropdown-item" th:href="@{/api?p=0&filter=3}">In Progress</a>
+                    <a class="dropdown-item" th:href="@{/api?p=0&filter=2}">In Portfolio</a>
+                    <a class="dropdown-item" th:href="@{/api?p=0&filter=1}">Rejected</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/api?p=0&filter=5}">All</a>
+                </div>
+            </div>
+
+
 
         <div class="table-responsive text-nowrap">
             <table id="dtDynamicVerticalScrollExample" class="table table-hover table-sm" cellspacing="0"

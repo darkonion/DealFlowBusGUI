@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 
 
 @Controller
@@ -24,7 +25,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/api")
-    public String loadSecuredUI(Model model, @RequestParam(value = "p", defaultValue = "0") int page,
+    public String loadLeads(Model model, @RequestParam(value = "p", defaultValue = "0") int page,
                                              @RequestParam(value = "filter", defaultValue = "5") int filter) {
 
         RestResponsePage<Lead> body = leadService.getLeads(page, filter);
@@ -36,6 +37,14 @@ public class MainController {
         model.addAttribute("currentpage", page + 1);
 
         model.addAttribute("filter", filter);
+
+        return "index";
+    }
+
+    @RequestMapping("/api/search")
+    public String searchResults(Model model, @RequestParam("query") String query) {
+        List<Lead> searchResults = leadService.getSearchResults(query);
+        model.addAttribute("leads", searchResults);
 
         return "index";
     }

@@ -2,6 +2,7 @@ package com.dealflowbus.gui.controllers;
 
 import com.dealflowbus.gui.config.models.Detail;
 import com.dealflowbus.gui.config.models.LeadExtended;
+import com.dealflowbus.gui.config.models.Note;
 import com.dealflowbus.gui.services.SingleLeadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +32,17 @@ public class SingleLeadController {
 
         model.addAttribute("notes", lead.getNotes());
         model.addAttribute("files", lead.getFiles());
+        model.addAttribute("newnote", new Note());
 
         return "leaddetails";
+    }
+
+    @RequestMapping("/api/delete")
+    public String deleteLead(@RequestParam("leadId") int leadId) {
+
+        singleLeadService.deleteLeadById(leadId);
+
+        return "redirect:/api";
     }
 
 

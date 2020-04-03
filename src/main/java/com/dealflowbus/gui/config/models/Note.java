@@ -2,6 +2,7 @@ package com.dealflowbus.gui.config.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
@@ -11,7 +12,7 @@ public class Note {
 
     private int noteId;
     private String note;
-    private LocalDate issueDate;
+    private LocalDate issueDate = LocalDate.now();
 
     public Note() {
     }

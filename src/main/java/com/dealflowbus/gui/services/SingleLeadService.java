@@ -27,6 +27,10 @@ public class SingleLeadService {
 
     }
 
+    public void deleteLeadById(int leadId) {
+        leadProxy.deleteLeadById(leadId, AccessToken.getToken());
+    }
+
 
 
 

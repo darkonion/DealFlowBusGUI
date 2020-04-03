@@ -3,6 +3,7 @@ package com.dealflowbus.gui.services;
 import com.dealflowbus.gui.RestResponsePage;
 import com.dealflowbus.gui.config.AccessToken;
 import com.dealflowbus.gui.config.models.Lead;
+import com.dealflowbus.gui.proxy.LeadProxy;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +21,11 @@ import java.util.stream.IntStream;
 public class LeadMainListService {
 
     private final RestTemplate restTemplate;
+    private final LeadProxy leadProxy;
 
-    public LeadMainListService(RestTemplate restTemplate) {this.restTemplate = restTemplate;}
+    public LeadMainListService(RestTemplate restTemplate, LeadProxy leadProxy) {this.restTemplate = restTemplate;
+        this.leadProxy = leadProxy;
+    }
 
 
     public List<Integer> getPageList(RestResponsePage<Lead> body) {
@@ -41,5 +45,9 @@ public class LeadMainListService {
         ResponseEntity<RestResponsePage<Lead>> responseEntity = restTemplate.exchange("http://34.102.169.103/api/leads?p={page}&filter={filter}", HttpMethod.GET, httpEntity ,customerHttpEntity, page, filter);
 
         return responseEntity.getBody();
+    }
+
+    public List<Lead> getSearchResults(String query) {
+        return leadProxy.getSearchResults(query, AccessToken.getToken());
     }
 }
