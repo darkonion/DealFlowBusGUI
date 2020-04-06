@@ -26,12 +26,12 @@
         }
 
         th {
-            background-color: #94BDF7;
+            background-color: #0275d8;
             color: white;
         }
         .logo {
-            max-width: 15%;
-            max-height: 15%;
+            max-width: 20%;
+            max-height: 20%;
             margin-top: 25px;
         }
 
@@ -53,11 +53,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
-<div class="container">
+<div class="container" style="padding-top: 20px;">
     <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
     <div class="jumbotron bg-white">
-        <h2 style="margin-right: 100px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
-        <p style="margin-right: 100px;" class="lead text-center">Universal tool to store your investment leads</p>
+        <h2 style="margin-right: 140px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 140px; padding-bottom: 30px;" class="lead text-center">Universal tool to store your investment leads</p>
     </div>
 
 
@@ -65,17 +65,17 @@
     <div style="float: left;">
         <!-- Search Form Here -->
         <form class="form-inline" th:action="@{/api/search}" method="GET">
-            <div class="form-group mx-sm-3 mb-2" style="float: left;">
+            <div class="form-group mb-2" style="float: left;">
                 <label class="sr-only">Search</label>
-                <input type="search" name="query" class="form-control  mr-sm-2" placeholder="Project Name/Owner" aria-label="Search">
+                <input type="search" name="query" class="form-control input-sm col-md-12" placeholder="Project Name/Owner" aria-label="Search">
             </div>
-            <button type="submit" class="btn btn-outline-primary btn-sm mb-2" >&nbsp;Search&nbsp;</button> <p class="text-muted text-nowrap">&nbsp;&nbsp;*case and form sensitive</p>
+            <button type="submit" class="btn btn-outline-primary mb-2" >&nbsp;Search&nbsp;</button> <p class="text-muted text-nowrap">&nbsp;&nbsp;*case and form sensitive</p>
         </form>
     </div>
 
 
-    <div style="float: right; padding-left: 10px;" class="btn-group">
-        <button type="button" class="btn btn-outline-primary btn-sm mb-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;Sort&nbsp;&nbsp;</button>
+    <div style="float: right; padding-left: 5px;" class="btn-group">
+        <button type="button" class="btn btn-outline-primary mb-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;Sort&nbsp;&nbsp;</button>
         <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu">
@@ -88,13 +88,17 @@
         </div>
     </div>
 
+    <div style="float: right; padding-left: 5px;">
+        <a th:href="@{/api/statistics}" type="button" class="btn btn-outline-primary mb-2">&nbsp;Statistics&nbsp;</a>
+    </div>
+
     <div style="float: right;">
-        <a th:href="@{/api/addLead}" type="button" class="btn btn-outline-primary btn-sm mb-2">&nbsp;+ Add New Lead&nbsp;</a>
+        <a th:href="@{/api/addForm}" type="button" class="btn btn-outline-primary mb-2">&nbsp;+ Add New Lead&nbsp;</a>
     </div>
 
 
     <div class="table-responsive text-nowrap">
-        <table id="dtDynamicVerticalScrollExample" class="table table-hover table-sm" cellspacing="0"
+        <table id="dtDynamicVerticalScrollExample" class="table table-hover" cellspacing="0"
                width="100%">
             <thead class="th">
             <tr>
@@ -119,21 +123,21 @@
         </table>
     </div>
 
-    <div class="row justify-content-md-center">
+    <div class="text-center">
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item" th:each="i: ${pageNumbers}">
+            <ul class="pagination text-center">
+                <li class="page-item text-center" th:each="i: ${pageNumbers}">
                     <a th:href="@{/api(p=${i}, filter=${filter})}" th:text="${i} + 1 " class="page-link"></a>
                 </li>
             </ul>
         </nav>
     </div>
     <br>
-    <div class="row justify-content-md-center">
+    <div class="text-center">
         <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
 
     </div>
-    <div class="row justify-content-md-center">
+    <div class="text-center">
         <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
     </div>
     <br>

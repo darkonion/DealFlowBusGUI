@@ -4,6 +4,8 @@ package com.dealflowbus.gui.config.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,9 +14,23 @@ import java.util.List;
 public class Lead {
 
     private int id;
+
+    @NotNull
+    @Size(min = 2, message = "Name should be at least 2 characters long")
+    @Size(max = 40, message = "Too long name, max 40 characters")
     private String projectName;
+
+    @NotNull
+    @Size(min = 2, message = "Owner should be at least 2 characters long")
+    @Size(max = 40, message = "Too long name of Owner, max 40 characters")
     private String projectOwner;
+
+    @NotNull(message = "You must choose something")
     private String field;
+
+    @NotNull
+    @Size(min = 6, message = "Email should be at least 6 characters long")
+    @Size(max = 40, message = "Too long email address, max 40 characters")
     private String email;
     private String extraAddress;
     private boolean inProgress;
@@ -68,6 +84,10 @@ public class Lead {
 
     public List<DBFIle> getFiles() {
         return files;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

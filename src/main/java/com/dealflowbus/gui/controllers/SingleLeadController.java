@@ -6,9 +6,13 @@ import com.dealflowbus.gui.config.models.Note;
 import com.dealflowbus.gui.services.SingleLeadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class SingleLeadController {
@@ -19,8 +23,8 @@ public class SingleLeadController {
 
 
     @RequestMapping("/api/lead")
-    private String getLead(Model model, @RequestParam("leadId") int id) {
-        Lead lead = singleLeadService.getLead(id);
+    private String getLead(Model model, @RequestParam("leadId") int leadId) {
+        Lead lead = singleLeadService.getLead(leadId);
         model.addAttribute("lead", lead);
 
         //temporary
@@ -46,19 +50,44 @@ public class SingleLeadController {
         return "redirect:/api";
     }
 
-    @RequestMapping("/api/addLead")
-    public String addLead(Model model) {
+    @RequestMapping("/api/addForm")
+    public String addLeadForm(Model model) {
         model.addAttribute("newlead", new Lead());
         model.addAttribute("detail", new Detail());
 
-        return "addlead";
+        return "add-form";
     }
 
-    @RequestMapping("api/saveLead")
-    public String saveLead(@ModelAttribute("newlead") Lead lead, @ModelAttribute("detail") Detail detail) {
-        singleLeadService.saveLead(lead, detail);
+    @PostMapping("api/saveLead")
+    public String saveLead(@Valid @ModelAttribute("newlead") Lead lead, BindingResult bindingResult, @ModelAttribute("detail") Detail detail) {
 
-        return "redirect:/api";
+        if (bindingResult.hasErrors()) {
+            return "add-form";
+        } else {
+            singleLeadService.saveLead(lead, detail);
+            return "redirect:/api";
+        }
     }
+
+    @RequestMapping("api/updateForm")
+    public String updateLeadForm(Model model, @RequestParam("leadId") int leadId) {
+        Lead lead = singleLeadService.getLead(leadId);
+        model.addAttribute("lead", lead);
+        System.out.println(lead);
+        return "update-form";
+    }
+
+    @RequestMapping("api/updateLead")
+    public String updateLead(@Valid @ModelAttribute("lead") Lead lead, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "update-form";
+        } else {
+            singleLeadService.updateLead(lead);
+            return "redirect:/api";
+        }
+    }
+
+
 
 }

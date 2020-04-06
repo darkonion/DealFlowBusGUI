@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Deal Flow Bus</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <style>
+        .jumbotron
+        {
+            padding-top: 30px;
+            padding-left: 5px;
+            padding-bottom:0px;
+            background-size: cover;
+            background: contain;
+            width: 100%; /* make sure to define width to fill container */
+            height: 110%; /* define the height in pixels or make sure   */
+            /* you have something in your div with height */
+            /* so you can see your image */
+            max-width:1400px;  /* define the max width */
+        }
+
+        th {
+            background-color: #94BDF7;
+            color: white;
+        }
+        .logo {
+            max-width: 20%;
+            max-height: 20%;
+            margin-top: 25px;
+        }
+
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #EBF3FF;
+        }
+
+        .inline {
+            display: inline;
+        }
+
+        .center-block {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<div class="container" style="padding-top: 20px;">
+    <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
+    <div class="jumbotron bg-white">
+        <h2 style="margin-right: 140px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 140px; padding-bottom: 30px;" class="lead text-center">Universal tool to store your investment leads</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 style="display: inline-block;">Database Statistics</h4>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">Main Statistics:</p>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Leads Count:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countTotal}"/></li>
+                <li class="list-group-item">Total of Leads being processed right now:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countProgress}"/></li>
+                <li class="list-group-item">Total of Rejected Leads:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countRejected}"/></li>
+                <li class="list-group-item">Total of Leads in Company Portfolio:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countPortfolio}"/></li>
+                <li class="list-group-item">Total of Forgotten Leads:*&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countForgotten}"/></li>
+                <li class="list-group-item">Total of Leads added this Month:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countAddedThisMonth}"/></li>
+                <li class="list-group-item">Total of Leads added this Year:&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.countAddedThisYear}"/></li>
+                <li class="list-group-item">Trends:**&nbsp;&nbsp; <p style="display: inline;" class="font-weight-bold" th:text="${stats.trend}"/></li>
+            </ul>
+            <br>
+
+            <div>
+                <p class="text-muted">* - Leads that are not rejected, not moved into portfolio, and not being touched/modified since month</p>
+                <p class="text-muted">** - Checking if number of Leads added to database in last month is greater than number of Leads added two months ago</p>
+            </div>
+            <br>
+            <p class="card-text">Detailed Statistics:</p><br>
+            <div class="col-md-10">
+                <canvas id="myChart"></canvas>
+            </div>
+
+
+        </div>
+
+        <br>
+        <div class="text-center">
+            <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
+        </div>
+
+        <div class="text-center">
+            <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
+        </div>
+        <br>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script th:inline="javascript">
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var labels = /*[[${labels}]]*/ 'labels';
+    var counts = /*[[${counts}]]*/ 'counts';
+
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'horizontalBar',
+
+    // The data for our dataset
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Count By Technology Field',
+            backgroundColor: 'rgb(148,189,247)',
+            borderColor: 'rgb(65,106,255)',
+            data: counts
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1,
+                    suggestedMax: 10
+                }
+            }]
+        }
+    }
+    });
+</script>
+</body>
+
+</html>
+
+
+
+
+

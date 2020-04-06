@@ -34,9 +34,15 @@ public class SingleLeadService {
 
 
     public void saveLead(Lead lead, Detail detail) {
+
         lead.setDetail(detail);
-        System.out.println(lead);
         leadProxy.saveLead(lead, AccessToken.getToken());
+
+    }
+
+    public void updateLead(Lead lead) {
+
+        leadProxy.updateLead(lead, AccessToken.getToken());
 
     }
 }

@@ -31,8 +31,8 @@
             color: white;
         }
         .logo {
-            max-width: 15%;
-            max-height: 15%;
+            max-width: 20%;
+            max-height: 20%;
             margin-top: 25px;
         }
 
@@ -54,28 +54,31 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
-<div class="container">
+<div class="container" style="padding-top: 20px;">
     <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
     <div class="jumbotron bg-white">
 
-        <h2 style="margin-right: 100px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
-        <p style="margin-right: 100px;" class="lead text-center">Universal tool to store your investment leads</p>
+        <h2 style="margin-right: 140px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 140px; padding-bottom: 30px;" class="lead text-center">Universal tool to store your investment leads</p>
     </div>
 
     <div class="card">
         <div class="card-header">
-            <h4 style="display: inline-block;">Adding new Lead</h4>
+            <h4 style="display: inline-block;">Updating Lead</h4>
         </div>
 
-        <form th:action="@{/api/saveLead}" th:object="${newlead}" method="POST">
+        <form th:action="@{/api/updateLead}" th:object="${lead}" method="POST">
             <input type="hidden" th:field="*{id}" >
+            <input type="hidden" th:field="*{dateArrival}" >
             <div class="form-group col-8">
                 <br>
                 <label for="FormControlInput1">Name of Project:</label>*
                 <input th:field="*{projectName}" type="text" class="form-control" id="FormControlInput1" placeholder="example: awesome cancer cure">
+                <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}" class="alert alert-danger mb-3 col-7"/>
                 <br>
                 <label for="FormControlInput2">Project Owner:</label>*
                 <input th:field="*{projectOwner}" type="text" class="form-control" id="FormControlInput2" placeholder="example: AwesomeBioStartup">
+                <p th:if="${#fields.hasErrors('projectOwner')}" th:errors="*{projectOwner}" class="alert alert-danger mb-3 col-7"/>
                 <br>
                 <div class="form-group">
                     <label for="FormControlSelect2">Technology Field:</label>
@@ -94,12 +97,14 @@
                         <option value="FinTech">FinTech</option>
                         <option value="Other">Other</option>
                     </select>
+                    <p th:if="${#fields.hasErrors('field')}" th:errors="*{field}" class="alert alert-danger mb-3 col-7"/>
                 </div>
                 <br>
                 <div class="dropdown-divider"></div>
                 <br>
                 <label for="FormControlInput3">Contact Email:</label>*
                 <input th:field="*{email}" type="text" class="form-control" id="FormControlInput3" placeholder="example@example.com">
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 col-7"/>
                 <br>
                 <label for="FormControlInput4">Additional Contact Details:</label>
                 <input th:field="*{extraAddress}" type="text" class="form-control" id="FormControlInput4" placeholder="example: John Kovalsky, telephone 567876987, www.awesomebiostartup.com">
@@ -112,7 +117,7 @@
                 </div>
                 <div class="custom-control custom-switch" style="padding-bottom: 5px;">
                     <input th:field="*{inPortfolio}" type="checkbox" class="custom-control-input" id="customSwitch2">
-                    <label class="custom-control-label" for="customSwitch2">Project is already in portfolio</label><br>
+                    <label class="custom-control-label" for="customSwitch2">Project added to portfolio</label><br>
                 </div>
                 <div class="custom-control custom-switch" style="padding-bottom: 5px;">
                     <input th:field="*{rejected}" type="checkbox" class="custom-control-input" id="customSwitch3">
@@ -121,9 +126,9 @@
                 <br>
                 <div class="dropdown-divider"></div>
                 <br>
-                <div class="form-group" th:object="${detail}">
+                <div class="form-group">
                     <label for="exampleFormControlTextarea1">Detailed Description of Project:</label>
-                    <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea th:field="*{detail.description}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <br>
                 <div class="dropdown-divider"></div>
@@ -134,7 +139,7 @@
                 <br>
                 <div class="dropdown-divider"></div>
                 <br>
-                <button type="submit" class="btn btn-outline-primary" >&nbsp;Submit&nbsp;</button>
+                <button type="submit" class="btn btn-outline-primary" >&nbsp;Update&nbsp;</button>
                 <a th:href="@{../api}" type="button" class="btn btn-outline-warning" style="display: inline">&nbsp;Go Back&nbsp;</a>
 
             </div>
@@ -142,11 +147,11 @@
 
     </div>
     <br>
-    <div class="row justify-content-md-center">
+    <div class="text-center">
         <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
     </div>
 
-    <div class="row justify-content-md-center">
+    <div class="text-center">
         <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
     </div>
     <br>

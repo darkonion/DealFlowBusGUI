@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Deaf Flow Bus</title>
+
+    <style>
+        .jumbotron
+        {
+            padding-top: 30px;
+            padding-left: 5px;
+            padding-bottom:0px;
+            background-size: cover;
+            background: contain;
+            width: 100%; /* make sure to define width to fill container */
+            height: 110%; /* define the height in pixels or make sure   */
+            /* you have something in your div with height */
+            /* so you can see your image */
+            max-width:1400px;  /* define the max width */
+        }
+
+        th {
+            background-color: #94BDF7;
+            color: white;
+        }
+        .logo {
+            max-width: 20%;
+            max-height: 20%;
+            margin-top: 25px;
+        }
+
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #EBF3FF;
+        }
+
+        .inline {
+            display: inline;
+        }
+
+        .center-block {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<div class="container" style="padding-top: 20px;">
+    <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
+    <div class="jumbotron bg-white">
+        <h2 style="margin-right: 140px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 140px; padding-bottom: 30px;" class="lead text-center">Universal tool to store your investment leads</p>
+    </div>
+    <div style="padding-top: 200px;">
+
+        <img class="center-block" th:src="@{/under-construction.png}"/>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

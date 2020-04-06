@@ -25,5 +25,8 @@ public interface LeadProxy {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/leads")
     void saveLead(@RequestBody Lead lead, @RequestHeader("Authorization") String token);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/api/leads")
+    void updateLead(@RequestBody Lead lead, @RequestHeader("Authorization") String token);
 }
 
