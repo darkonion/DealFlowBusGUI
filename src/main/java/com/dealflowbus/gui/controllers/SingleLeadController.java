@@ -1,11 +1,12 @@
 package com.dealflowbus.gui.controllers;
 
 import com.dealflowbus.gui.config.models.Detail;
-import com.dealflowbus.gui.config.models.LeadExtended;
+import com.dealflowbus.gui.config.models.Lead;
 import com.dealflowbus.gui.config.models.Note;
 import com.dealflowbus.gui.services.SingleLeadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,7 +20,7 @@ public class SingleLeadController {
 
     @RequestMapping("/api/lead")
     private String getLead(Model model, @RequestParam("leadId") int id) {
-        LeadExtended lead = singleLeadService.getLead(id);
+        Lead lead = singleLeadService.getLead(id);
         model.addAttribute("lead", lead);
 
         //temporary
@@ -45,5 +46,19 @@ public class SingleLeadController {
         return "redirect:/api";
     }
 
+    @RequestMapping("/api/addLead")
+    public String addLead(Model model) {
+        model.addAttribute("newlead", new Lead());
+        model.addAttribute("detail", new Detail());
+
+        return "addlead";
+    }
+
+    @RequestMapping("api/saveLead")
+    public String saveLead(@ModelAttribute("newlead") Lead lead, @ModelAttribute("detail") Detail detail) {
+        singleLeadService.saveLead(lead, detail);
+
+        return "redirect:/api";
+    }
 
 }

@@ -16,4 +16,12 @@ public class Detail {
     public Detail(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Detail{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

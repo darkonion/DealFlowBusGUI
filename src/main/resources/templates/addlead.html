@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Deaf Flow Bus</title>
+
+    <style>
+        .jumbotron
+        {
+            padding-top: 30px;
+            padding-left: 5px;
+            padding-bottom:0px;
+            background-size: cover;
+            background: contain;
+            width: 100%; /* make sure to define width to fill container */
+            height: 110%; /* define the height in pixels or make sure   */
+            /* you have something in your div with height */
+            /* so you can see your image */
+            max-width:1400px;  /* define the max width */
+        }
+
+        th {
+            background-color: #94BDF7;
+            color: white;
+        }
+        .logo {
+            max-width: 15%;
+            max-height: 15%;
+            margin-top: 25px;
+        }
+
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #EBF3FF;
+        }
+        .menubutton {
+            float: right;
+            display: inline;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<div class="container">
+    <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
+    <div class="jumbotron bg-white">
+
+        <h2 style="margin-right: 100px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
+        <p style="margin-right: 100px;" class="lead text-center">Universal tool to store your investment leads</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 style="display: inline-block;">Adding new Lead</h4>
+        </div>
+
+        <form th:action="@{/api/saveLead}" th:object="${newlead}" method="POST">
+            <input type="hidden" th:field="*{id}" >
+            <div class="form-group col-8">
+                <br>
+                <label for="FormControlInput1">Name of Project:</label>*
+                <input th:field="*{projectName}" type="text" class="form-control" id="FormControlInput1" placeholder="example: awesome cancer cure">
+                <br>
+                <label for="FormControlInput2">Project Owner:</label>*
+                <input th:field="*{projectOwner}" type="text" class="form-control" id="FormControlInput2" placeholder="example: AwesomeBioStartup">
+                <br>
+                <div class="form-group">
+                    <label for="FormControlSelect2">Technology Field:</label>
+                    <select th:field="*{field}" class="form-control" id="FormControlSelect2">
+                        <option value="Advanced Materials">Advanced Materials</option>
+                        <option value="DeepTech">DeepTech</option>
+                        <option value="Industry 4.0">Industry 4.0</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="CyberSec">CyberSec</option>
+                        <option value="BioTech">BioTech</option>
+                        <option value="MedTech">MedTech</option>
+                        <option value="Automotive/Aviation">Automotive/Aviation</option>
+                        <option value="IoT/AI/ML">IoT/AI/ML</option>
+                        <option value="ImpactTech">ImpactTech</option>
+                        <option value="MobileApp">MobileApp</option>
+                        <option value="FinTech">FinTech</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                <label for="FormControlInput3">Contact Email:</label>*
+                <input th:field="*{email}" type="text" class="form-control" id="FormControlInput3" placeholder="example@example.com">
+                <br>
+                <label for="FormControlInput4">Additional Contact Details:</label>
+                <input th:field="*{extraAddress}" type="text" class="form-control" id="FormControlInput4" placeholder="example: John Kovalsky, telephone 567876987, www.awesomebiostartup.com">
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                <div class="custom-control custom-switch" style="padding-bottom: 5px;">
+                    <input th:field="*{inProgress}" type="checkbox" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1">Project is in progress</label>
+                </div>
+                <div class="custom-control custom-switch" style="padding-bottom: 5px;">
+                    <input th:field="*{inPortfolio}" type="checkbox" class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2">Project is already in portfolio</label><br>
+                </div>
+                <div class="custom-control custom-switch" style="padding-bottom: 5px;">
+                    <input th:field="*{rejected}" type="checkbox" class="custom-control-input" id="customSwitch3">
+                    <label class="custom-control-label" for="customSwitch3">Project is rejected</label>
+                </div>
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                <div class="form-group" th:object="${detail}">
+                    <label for="exampleFormControlTextarea1">Detailed Description of Project:</label>
+                    <textarea th:field="*{description}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                <div>
+                    <p>+ Add File (soon)</p>
+                </div>
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                <button type="submit" class="btn btn-outline-primary" >&nbsp;Submit&nbsp;</button>
+                <a th:href="@{../api}" type="button" class="btn btn-outline-warning" style="display: inline">&nbsp;Go Back&nbsp;</a>
+
+            </div>
+        </form>
+
+    </div>
+    <br>
+    <div class="row justify-content-md-center">
+        <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
+    </div>
+    <br>
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

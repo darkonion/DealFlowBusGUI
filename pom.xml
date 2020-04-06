@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dealflowbus</groupId>
     <artifactId>gui</artifactId>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.13-SNAPSHOT</version>
     <name>gui</name>
     <description>Graphic interface for cloud service</description>
 

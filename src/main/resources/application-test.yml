@@ -1,11 +1,8 @@
-spring:
-  profiles:
-    active: default
 
 security:
   oauth2:
     client:
-      client-id: webgui
+      client-id: testgui
       client-secret: ovarkills11
       user-authorization-uri: http://34.102.169.103/uaa/oauth/authorize
       access-token-uri:  http://34.102.169.103/uaa/oauth/token

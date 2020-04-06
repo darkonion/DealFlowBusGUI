@@ -67,7 +67,8 @@
         <div class="card-header">
             <h4 style="display: inline-block;"  th:text="${lead.projectName}"/>
             <a sec:authorize="hasRole('ROLE_admin')" th:href="@{/api/delete(leadId = ${lead.id})}" type="button"
-               class="btn btn-outline-danger menubutton" style="margin-left: 5px">&nbsp; Delete &nbsp;</a>
+               class="btn btn-outline-danger menubutton" style="margin-left: 5px"
+               onclick="if (!(confirm('Are you sure you want to remove this Lead from Database?'))) return false">&nbsp; Delete &nbsp;</a>
             <a type="button" class="btn btn-outline-warning menubutton" style="margin-left: 5px">&nbsp; Edit &nbsp;</a>
 
             <!-- Button trigger modal -->
@@ -94,7 +95,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="submit" class="btn btn-primary">Add Note</button>
                                 </div>
                             </form>
                     </div>
@@ -140,6 +141,7 @@
             <a th:href="@{../api}" type="button" class="btn btn-outline-primary" style="margin-top: 20px;">&nbsp;Go Back&nbsp;</a>
         </div>
     </div>
+        <br>
     <div class="row justify-content-md-center">
         <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
 
@@ -147,6 +149,7 @@
     <div class="row justify-content-md-center">
         <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
     </div>
+        <br>
 
 
 </div>

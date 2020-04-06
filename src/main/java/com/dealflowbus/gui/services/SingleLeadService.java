@@ -1,7 +1,8 @@
 package com.dealflowbus.gui.services;
 
 import com.dealflowbus.gui.config.AccessToken;
-import com.dealflowbus.gui.config.models.LeadExtended;
+import com.dealflowbus.gui.config.models.Detail;
+import com.dealflowbus.gui.config.models.Lead;
 import com.dealflowbus.gui.proxy.LeadProxy;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,12 @@ public class SingleLeadService {
 
     public SingleLeadService(LeadProxy leadProxy) {this.leadProxy = leadProxy;}
 
-    public LeadExtended getLead(int id) {
-        Optional<LeadExtended> leadoptional =
+    public Lead getLead(int id) {
+        Optional<Lead> leadoptional =
                 leadProxy.getLeadbyId(id, AccessToken.getToken());
 
         if (leadoptional.isPresent()) {
-            LeadExtended lead = leadoptional.get();
+            Lead lead = leadoptional.get();
             return lead;
         } else {
             throw new IllegalArgumentException("Lead with such Id does not exist");
@@ -32,9 +33,10 @@ public class SingleLeadService {
     }
 
 
+    public void saveLead(Lead lead, Detail detail) {
+        lead.setDetail(detail);
+        System.out.println(lead);
+        leadProxy.saveLead(lead, AccessToken.getToken());
 
-
-
-
-
+    }
 }
