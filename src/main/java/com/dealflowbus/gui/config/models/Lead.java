@@ -90,6 +90,14 @@ public class Lead {
         return id;
     }
 
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public void setFiles(List<DBFIle> files) {
+        this.files = files;
+    }
+
     @Override
     public String toString() {
         return "Lead{" +

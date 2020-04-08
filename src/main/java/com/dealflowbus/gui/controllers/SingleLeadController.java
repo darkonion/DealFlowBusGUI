@@ -59,7 +59,9 @@ public class SingleLeadController {
     }
 
     @PostMapping("api/saveLead")
-    public String saveLead(@Valid @ModelAttribute("newlead") Lead lead, BindingResult bindingResult, @ModelAttribute("detail") Detail detail) {
+    public String saveLead(@Valid @ModelAttribute("newlead") Lead lead,
+            BindingResult bindingResult,
+            @ModelAttribute("detail") Detail detail) {
 
         if (bindingResult.hasErrors()) {
             return "add-form";
@@ -73,12 +75,12 @@ public class SingleLeadController {
     public String updateLeadForm(Model model, @RequestParam("leadId") int leadId) {
         Lead lead = singleLeadService.getLead(leadId);
         model.addAttribute("lead", lead);
-        System.out.println(lead);
         return "update-form";
     }
 
     @RequestMapping("api/updateLead")
-    public String updateLead(@Valid @ModelAttribute("lead") Lead lead, BindingResult bindingResult) {
+    public String updateLead(@Valid @ModelAttribute("lead") Lead lead,
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "update-form";
