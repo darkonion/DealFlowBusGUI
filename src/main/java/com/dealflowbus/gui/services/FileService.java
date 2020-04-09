@@ -1,6 +1,5 @@
 package com.dealflowbus.gui.services;
 
-import com.dealflowbus.gui.config.AccessToken;
 import com.dealflowbus.gui.proxy.FileProxy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ public class FileService {
 
     public ResponseEntity<byte[]> getFileResponse(String fileId, String fileType) {
 
-        byte[] file = fileProxy.getFile(fileId, AccessToken.getToken());
+        byte[] file = fileProxy.getFile(fileId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(fileType));
@@ -28,12 +27,12 @@ public class FileService {
 
     public void postFile(int leadId, MultipartFile file) {
 
-        fileProxy.postFile(leadId, file, AccessToken.getToken());
+        fileProxy.postFile(leadId, file);
     }
 
     public void deleteFile(String fileId) {
 
-        fileProxy.deleteFile(fileId, AccessToken.getToken());
+        fileProxy.deleteFile(fileId);
     }
 
 }

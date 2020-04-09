@@ -36,7 +36,7 @@ public class FileController {
         try {
             fileService.postFile(leadId, file);
             redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
         }
 
@@ -50,7 +50,7 @@ public class FileController {
         try {
             fileService.deleteFile(fileId);
             redirectAttributes.addFlashAttribute("message", "File has been deleted succesfully");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
         }
 

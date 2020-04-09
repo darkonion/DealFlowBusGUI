@@ -4,7 +4,6 @@ import com.dealflowbus.gui.config.models.Lead;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,18 +14,18 @@ import java.util.Optional;
 public interface LeadProxy {
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/leads/{id}")
-    Optional<Lead> getLeadbyId(@PathVariable("id") int id, @RequestHeader("Authorization") String token);
+    Optional<Lead> getLeadbyId(@PathVariable("id") int id);
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/lsearch?query={query}")
-    List<Lead> getSearchResults(@PathVariable("query") String query, @RequestHeader("Authorization") String token);
+    List<Lead> getSearchResults(@PathVariable("query") String query);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/api/leads/{id}")
-    void deleteLeadById(@PathVariable("id") int id, @RequestHeader("Authorization") String token);
+    void deleteLeadById(@PathVariable("id") int id);
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/leads")
-    void saveLead(@RequestBody Lead lead, @RequestHeader("Authorization") String token);
+    void saveLead(@RequestBody Lead lead);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/api/leads")
-    void updateLead(@RequestBody Lead lead, @RequestHeader("Authorization") String token);
+    void updateLead(@RequestBody Lead lead);
 }
 

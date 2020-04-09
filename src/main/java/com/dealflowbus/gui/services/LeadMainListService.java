@@ -22,9 +22,13 @@ public class LeadMainListService {
 
     private final RestTemplate restTemplate;
     private final LeadProxy leadProxy;
+    private final AccessToken accessToken;
 
-    public LeadMainListService(RestTemplate restTemplate, LeadProxy leadProxy) {this.restTemplate = restTemplate;
+    public LeadMainListService(RestTemplate restTemplate,
+            LeadProxy leadProxy, AccessToken accessToken) {
+        this.restTemplate = restTemplate;
         this.leadProxy = leadProxy;
+        this.accessToken = accessToken;
     }
 
 
@@ -37,10 +41,12 @@ public class LeadMainListService {
     public RestResponsePage<Lead> getLeads(
             @RequestParam(value = "p", defaultValue = "0") int page,
             @RequestParam(value = "filter", defaultValue = "5") int filter) {
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", AccessToken.getToken());
+        httpHeaders.add("Authorization", accessToken.getToken());
         HttpEntity<Lead> httpEntity = new HttpEntity<>(httpHeaders);
-        ParameterizedTypeReference<RestResponsePage<Lead>> customerHttpEntity = new ParameterizedTypeReference<RestResponsePage<Lead>>() {};
+
+        ParameterizedTypeReference<RestResponsePage<Lead>> customerHttpEntity = new ParameterizedTypeReference<>() {};
 
         ResponseEntity<RestResponsePage<Lead>> responseEntity = restTemplate.exchange("http://34.102.169.103/api/leads?p={page}&filter={filter}", HttpMethod.GET, httpEntity ,customerHttpEntity, page, filter);
 
@@ -48,6 +54,7 @@ public class LeadMainListService {
     }
 
     public List<Lead> getSearchResults(String query) {
-        return leadProxy.getSearchResults(query, AccessToken.getToken());
+        return leadProxy.getSearchResults(query);
     }
+
 }

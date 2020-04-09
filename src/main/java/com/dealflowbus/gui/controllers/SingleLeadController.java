@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -43,9 +44,11 @@ public class SingleLeadController {
     }
 
     @RequestMapping("/api/delete")
-    public String deleteLead(@RequestParam("leadId") int leadId) {
+    public String deleteLead(@RequestParam("leadId") int leadId,
+            RedirectAttributes redirectAttributes) {
 
         singleLeadService.deleteLeadById(leadId);
+        redirectAttributes.addFlashAttribute("message", "Lead has been deleted successfully!");
 
         return "redirect:/api";
     }
@@ -61,31 +64,39 @@ public class SingleLeadController {
     @PostMapping("api/saveLead")
     public String saveLead(@Valid @ModelAttribute("newlead") Lead lead,
             BindingResult bindingResult,
-            @ModelAttribute("detail") Detail detail) {
+            @ModelAttribute("detail") Detail detail,
+            RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "add-form";
         } else {
+
             singleLeadService.saveLead(lead, detail);
+            redirectAttributes.addFlashAttribute("message", "New Lead has been added successfully!");
+
             return "redirect:/api";
         }
     }
 
     @RequestMapping("api/updateForm")
     public String updateLeadForm(Model model, @RequestParam("leadId") int leadId) {
+
         Lead lead = singleLeadService.getLead(leadId);
         model.addAttribute("lead", lead);
+
         return "update-form";
     }
 
     @RequestMapping("api/updateLead")
     public String updateLead(@Valid @ModelAttribute("lead") Lead lead,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "update-form";
         } else {
             singleLeadService.updateLead(lead);
+            redirectAttributes.addFlashAttribute("message", "Lead has been updated successfully!");
             return "redirect:/api";
         }
     }

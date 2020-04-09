@@ -15,4 +15,3 @@ server:
       cookie:
         name: DFB_SESSION2
   port: 8080
-

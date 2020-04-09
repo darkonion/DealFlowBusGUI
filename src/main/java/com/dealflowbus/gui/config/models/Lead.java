@@ -4,6 +4,7 @@ package com.dealflowbus.gui.config.models;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -29,9 +30,11 @@ public class Lead {
     private String field;
 
     @NotNull
-    @Size(min = 6, message = "Email should be at least 6 characters long")
-    @Size(max = 40, message = "Too long email address, max 40 characters")
+    @Email(regexp = "[a-zA-Z0-9_]{0,15}@[a-zA-Z0-9]{0,10}.[a-z]{0,4}|" +
+            "[a-zA-Z0-9_]{0,15}@[a-zA-Z0-9]{0,15}.[a-z]{0,4}.[a-z]{0,4}",
+            message = "Wrong email Syntax, try again!")
     private String email;
+
     private String extraAddress;
     private boolean inProgress;
     private boolean rejected;
@@ -41,7 +44,6 @@ public class Lead {
     private Detail detail;
     private List<Note> notes;
     private List<DBFIle> files;
-
 
     public Lead() {
 
@@ -70,52 +72,5 @@ public class Lead {
         this.files = files;
     }
 
-    public void setDetail(Detail detail) {
-        this.detail = detail;
-    }
-
-    public Detail getDetail() {
-        return detail;
-    }
-
-    public List<Note> getNotes() {
-        return notes;
-    }
-
-    public List<DBFIle> getFiles() {
-        return files;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
-    }
-
-    public void setFiles(List<DBFIle> files) {
-        this.files = files;
-    }
-
-    @Override
-    public String toString() {
-        return "Lead{" +
-                "id=" + id +
-                ", projectName='" + projectName + '\'' +
-                ", projectOwner='" + projectOwner + '\'' +
-                ", field='" + field + '\'' +
-                ", email='" + email + '\'' +
-                ", extraAddress='" + extraAddress + '\'' +
-                ", inProgress=" + inProgress +
-                ", rejected=" + rejected +
-                ", inPortfolio=" + inPortfolio +
-                ", dateArrival=" + dateArrival +
-                ", lastTouched=" + lastTouched +
-                ", detail=" + detail +
-                ", notes=" + notes +
-                ", files=" + files +
-                '}';
-    }
 }
 

@@ -29,6 +29,7 @@
             background-color: #0275d8;
             color: white;
         }
+
         .logo {
             max-width: 20%;
             max-height: 20%;
@@ -39,9 +40,21 @@
             background-color: #EBF3FF;
         }
 
-        .inline {
-            display: inline;
+        .alert {
+            margin-bottom: 1px;
+            height: 40px;
+            line-height:30px;
+            padding:10px 10px;
         }
+
+        .table {
+            width: 100%;
+            display: table;
+
+        }
+
+
+
 
     </style>
 
@@ -69,7 +82,7 @@
                 <label class="sr-only">Search</label>
                 <input type="search" name="query" class="form-control input-sm col-md-12" placeholder="Project Name/Owner" aria-label="Search">
             </div>
-            <button type="submit" class="btn btn-outline-primary mb-2" >&nbsp;Search&nbsp;</button> <p class="text-muted text-nowrap">&nbsp;&nbsp;*case and form sensitive</p>
+            <button type="submit" class="btn btn-outline-primary mb-2" >&nbsp;Search&nbsp;</button>
         </form>
     </div>
 
@@ -96,43 +109,50 @@
         <a th:href="@{/api/addForm}" type="button" class="btn btn-outline-primary mb-2">&nbsp;+ Add New Lead&nbsp;</a>
     </div>
 
+</div>
 
-    <div class="table-responsive text-nowrap">
-        <table id="dtDynamicVerticalScrollExample" class="table table-hover" cellspacing="0"
+    <div class="container table-hover table-striped table-borderless">
+
+        <div  class="alert alert-success" role="alert" th:if="${message}">
+            <h6 style="float: right;" th:text="${message}"/>
+        </div>
+        <table id="dtDynamicVerticalScrollExample" class="table mx-auto shadow p-3 mb-5 bg-white rounded" cellspacing="0"
                width="100%">
-            <thead class="th">
-            <tr>
-                <th class="th-sm">Project Name</th>
+            <thead>
+            <tr class="rounded-top">
+                <th style="border-top-left-radius: 5px;" class="th-sm">Project Name</th>
                 <th class="th-sm">Project Owner</th>
                 <th class="th-sm">Field</th>
                 <th class="th-sm">In Progress</th>
                 <th class="th-sm">Date of Arrival</th>
-                <th class="th-sm">Last Touched</th>
+                <th style="border-top-right-radius: 5px;" class="th-sm">Last Touched</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="lead : ${leads}">
-                <td><a th:href="@{/api/lead(leadId=${lead.id})}" th:text="${lead.projectName}"></a></td>
-                <td th:text="${lead.projectOwner}"/>
-                <td th:text="${lead.field}"/>
-                <td th:text="${lead.inProgress}"/>
-                <td th:text="${lead.dateArrival}"/>
-                <td th:text="${lead.lastTouched}"/>
+            <tr th:each="lead : ${leads}" style="cursor: pointer"
+                th:onclick="'javascript:rowClicked(\'' + ${lead.id} + '\');'">
+                <td><a class="font-weight-normal"  th:text="${lead.projectName}"></a></td>
+                <td class="font-weight-light" th:text="${lead.projectOwner}"/>
+                <td class="font-weight-light" th:text="${lead.field}"/>
+                <td class="font-weight-light" th:text="${lead.inProgress}"/>
+                <td class="font-weight-light" th:text="${lead.dateArrival}"/>
+                <td class="font-weight-light" th:text="${lead.lastTouched}"/>
             </tr>
             </tbody>
         </table>
+
+
+        <div class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item text-center" th:each="i: ${pageNumbers}">
+                        <a th:href="@{/api(p=${i}, filter=${filter})}" th:text="${i} + 1 " class="page-link"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 
-    <div class="text-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination text-center">
-                <li class="page-item text-center" th:each="i: ${pageNumbers}">
-                    <a th:href="@{/api(p=${i}, filter=${filter})}" th:text="${i} + 1 " class="page-link"></a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <br>
     <div class="text-center">
         <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>
 
@@ -141,8 +161,12 @@
         <a href="https://github.com/darkonion/DealFlowBus"><img style="max-width: 70%;, max-height: 70%;" th:src="@{/gitlogo.png}"></a>
     </div>
     <br>
-</div>
 
+<script>
+    function rowClicked(value) {
+        location.href = "/api/lead?leadId=" + value;
+    }
+</script>
 
 
 </body>

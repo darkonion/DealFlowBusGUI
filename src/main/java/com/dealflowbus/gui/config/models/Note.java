@@ -15,8 +15,4 @@ public class Note {
 
     public Note() {
     }
-
-    public String getNote() {
-        return note;
-    }
 }

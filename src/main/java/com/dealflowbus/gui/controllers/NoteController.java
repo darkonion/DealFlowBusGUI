@@ -24,7 +24,7 @@ public class NoteController {
         try {
             noteService.deleteNote(leadId, noteId);
             redirectAttributes.addFlashAttribute("message", "Note has been removed successfully");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
         }
 
@@ -42,8 +42,8 @@ public class NoteController {
 
         try {
             noteService.addNote(leadId, theNote);
-            redirectAttributes.addFlashAttribute("message", "New note has been added successfully");
-        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("message", "New note has been added successfully!");
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
         }
 

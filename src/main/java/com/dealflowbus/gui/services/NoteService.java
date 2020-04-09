@@ -1,6 +1,5 @@
 package com.dealflowbus.gui.services;
 
-import com.dealflowbus.gui.config.AccessToken;
 import com.dealflowbus.gui.config.models.Note;
 import com.dealflowbus.gui.proxy.NoteProxy;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class NoteService {
     public void deleteNote(int leadId, int noteId) {
         System.out.println(leadId);
         try {
-            noteProxy.deleteNote(leadId, noteId, AccessToken.getToken());
+            noteProxy.deleteNote(leadId, noteId);
         } catch (RuntimeException e) {
             //must think about it
         }
@@ -26,9 +25,9 @@ public class NoteService {
 
     public void addNote(int leadId, Note note) {
         if (note != null) {
-            noteProxy.addNote(leadId, note, AccessToken.getToken());
+            noteProxy.addNote(leadId, note);
         } else {
-            noteProxy.addNote(leadId, new Note(), AccessToken.getToken());
+            noteProxy.addNote(leadId, new Note());
         }
     }
 

@@ -1,6 +1,5 @@
 package com.dealflowbus.gui.services;
 
-import com.dealflowbus.gui.config.AccessToken;
 import com.dealflowbus.gui.config.models.Detail;
 import com.dealflowbus.gui.config.models.Lead;
 import com.dealflowbus.gui.proxy.LeadProxy;
@@ -17,7 +16,7 @@ public class SingleLeadService {
 
     public Lead getLead(int id) {
         Optional<Lead> leadoptional =
-                leadProxy.getLeadbyId(id, AccessToken.getToken());
+                leadProxy.getLeadbyId(id);
 
         if (leadoptional.isPresent()) {
             Lead lead = leadoptional.get();
@@ -29,20 +28,20 @@ public class SingleLeadService {
     }
 
     public void deleteLeadById(int leadId) {
-        leadProxy.deleteLeadById(leadId, AccessToken.getToken());
+        leadProxy.deleteLeadById(leadId);
     }
 
 
     public void saveLead(Lead lead, Detail detail) {
 
         lead.setDetail(detail);
-        leadProxy.saveLead(lead, AccessToken.getToken());
+        leadProxy.saveLead(lead);
 
     }
 
     public void updateLead(Lead lead) {
 
-        leadProxy.updateLead(lead, AccessToken.getToken());
+        leadProxy.updateLead(lead);
 
     }
 }
