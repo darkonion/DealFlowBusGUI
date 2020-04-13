@@ -24,8 +24,16 @@ public class SingleLeadController {
 
 
     @RequestMapping("/api/lead")
-    private String getLead(Model model, @RequestParam("leadId") int leadId) {
+    private String getLead(Model model, @RequestParam("leadId") int leadId,
+            RedirectAttributes redirectAttributes) {
+
         Lead lead = singleLeadService.getLead(leadId);
+
+        if (lead.getProjectName().equals("warning")) {
+            redirectAttributes.addFlashAttribute("warning", "Server Error, please try again!");
+            return "redirect:/api";
+        }
+
         model.addAttribute("lead", lead);
 
         //temporary
@@ -47,8 +55,11 @@ public class SingleLeadController {
     public String deleteLead(@RequestParam("leadId") int leadId,
             RedirectAttributes redirectAttributes) {
 
-        singleLeadService.deleteLeadById(leadId);
-        redirectAttributes.addFlashAttribute("message", "Lead has been deleted successfully!");
+        if(singleLeadService.deleteLeadById(leadId).equals("warning")) {
+            redirectAttributes.addFlashAttribute( "warning", "Server Error, please try again!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Lead has been deleted successfully!");
+        }
 
         return "redirect:/api";
     }
@@ -63,19 +74,20 @@ public class SingleLeadController {
 
     @PostMapping("api/saveLead")
     public String saveLead(@Valid @ModelAttribute("newlead") Lead lead,
-            BindingResult bindingResult,
-            @ModelAttribute("detail") Detail detail,
+            BindingResult bindingResult, @ModelAttribute("detail") Detail detail,
             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "add-form";
-        } else {
-
-            singleLeadService.saveLead(lead, detail);
-            redirectAttributes.addFlashAttribute("message", "New Lead has been added successfully!");
-
-            return "redirect:/api";
         }
+
+        if (singleLeadService.saveLead(lead, detail).getStatusCodeValue() == 500) {
+            redirectAttributes.addFlashAttribute("warning", "Server Error, please try again!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "New Lead has been added successfully!");
+        }
+
+        return "redirect:/api";
     }
 
     @RequestMapping("api/updateForm")
@@ -88,17 +100,20 @@ public class SingleLeadController {
     }
 
     @RequestMapping("api/updateLead")
-    public String updateLead(@Valid @ModelAttribute("lead") Lead lead,
-            BindingResult bindingResult,
+    public String updateLead(@Valid @ModelAttribute("lead") Lead lead, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "update-form";
-        } else {
-            singleLeadService.updateLead(lead);
-            redirectAttributes.addFlashAttribute("message", "Lead has been updated successfully!");
-            return "redirect:/api";
         }
+
+        if (singleLeadService.updateLead(lead).getStatusCodeValue() == 500) {
+            redirectAttributes.addFlashAttribute("warning", "Server Error, please try again!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Lead has been updated successfully!");
+        }
+
+        return "redirect:/api";
     }
 
 

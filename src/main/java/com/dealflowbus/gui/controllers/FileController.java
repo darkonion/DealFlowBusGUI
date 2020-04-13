@@ -26,7 +26,8 @@ public class FileController {
     }
 
     @RequestMapping(value = "/api/lead/{id}/savefile")
-    public String addFile(@PathVariable("id") int leadId, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String addFile(@PathVariable("id") int leadId, @RequestParam("file") MultipartFile file,
+            RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("warning", "You didn't attached any file!");
@@ -35,10 +36,13 @@ public class FileController {
 
         try {
             fileService.postFile(leadId, file);
-            redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
+            return "redirect:/api/lead?leadId=" + leadId;
         }
+
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
 
         return "redirect:/api/lead?leadId=" + leadId;
     }
@@ -47,13 +51,14 @@ public class FileController {
     public String deleteFile(@PathVariable("id") int leadId, @RequestParam("fileId") String fileId,
             RedirectAttributes redirectAttributes) {
 
-        try {
+        try{
             fileService.deleteFile(fileId);
-            redirectAttributes.addFlashAttribute("message", "File has been deleted succesfully");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
+            return "redirect:/api/lead?leadId=" + leadId;
         }
 
+            redirectAttributes.addFlashAttribute("message", "File has been deleted succesfully");
 
         return "redirect:/api/lead?leadId=" + leadId;
     }

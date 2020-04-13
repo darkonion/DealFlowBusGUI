@@ -3,6 +3,7 @@ package com.dealflowbus.gui.services;
 import com.dealflowbus.gui.config.models.Detail;
 import com.dealflowbus.gui.config.models.Lead;
 import com.dealflowbus.gui.proxy.LeadProxy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,27 +22,28 @@ public class SingleLeadService {
         if (leadoptional.isPresent()) {
             Lead lead = leadoptional.get();
             return lead;
-        } else {
-            throw new IllegalArgumentException("Lead with such Id does not exist");
+        } else if (leadoptional.isEmpty()) {
+            Lead error = new Lead();
+            error.setProjectName("warning");
+            return error;
         }
-
+        return null;
     }
 
-    public void deleteLeadById(int leadId) {
-        leadProxy.deleteLeadById(leadId);
+    public String deleteLeadById(int leadId) {
+        return leadProxy.deleteLeadById(leadId);
     }
 
 
-    public void saveLead(Lead lead, Detail detail) {
+    public ResponseEntity<Lead> saveLead(Lead lead, Detail detail) {
 
         lead.setDetail(detail);
-        leadProxy.saveLead(lead);
 
+        return leadProxy.saveLead(lead);
     }
 
-    public void updateLead(Lead lead) {
+    public ResponseEntity<Lead> updateLead(Lead lead) {
 
-        leadProxy.updateLead(lead);
-
+        return leadProxy.updateLead(lead);
     }
 }

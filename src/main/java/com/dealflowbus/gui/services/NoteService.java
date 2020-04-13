@@ -2,6 +2,7 @@ package com.dealflowbus.gui.services;
 
 import com.dealflowbus.gui.config.models.Note;
 import com.dealflowbus.gui.proxy.NoteProxy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,23 +14,14 @@ public class NoteService {
         this.noteProxy = noteProxy;
     }
 
-    public void deleteNote(int leadId, int noteId) {
-        System.out.println(leadId);
-        try {
-            noteProxy.deleteNote(leadId, noteId);
-        } catch (RuntimeException e) {
-            //must think about it
-        }
-
+    public String deleteNote(int leadId, int noteId) {
+        return noteProxy.deleteNote(leadId, noteId);
     }
 
-    public void addNote(int leadId, Note note) {
-        if (note != null) {
-            noteProxy.addNote(leadId, note);
-        } else {
-            noteProxy.addNote(leadId, new Note());
-        }
+    public ResponseEntity<Note> addNote(int leadId, Note note) {
+            return noteProxy.addNote(leadId, note);
     }
-
-
 }
+
+
+

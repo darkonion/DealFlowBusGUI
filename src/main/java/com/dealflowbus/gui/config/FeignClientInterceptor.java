@@ -10,7 +10,7 @@ public class FeignClientInterceptor implements RequestInterceptor {
 
     private final AccessToken accessToken;
 
-    private static final String AUTH_HEADER = "Authorization";
+    private static final String AUTH_HEADER = "authorization";
 
 
     public FeignClientInterceptor(AccessToken accessToken) {

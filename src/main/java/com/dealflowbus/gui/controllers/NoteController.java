@@ -21,12 +21,13 @@ public class NoteController {
     public String deleteNote(@RequestParam("leadId") int leadId, @RequestParam("noteId") int noteId,
             RedirectAttributes redirectAttributes) {
 
-        try {
-            noteService.deleteNote(leadId, noteId);
-            redirectAttributes.addFlashAttribute("message", "Note has been removed successfully");
-        } catch (Exception e) {
+        if (noteService.deleteNote(leadId, noteId).equals("warning")) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
+            return "redirect:/api/lead?leadId=" + leadId;
         }
+
+        noteService.deleteNote(leadId, noteId);
+        redirectAttributes.addFlashAttribute("message", "Note has been removed successfully");
 
         return "redirect:/api/lead?leadId=" + leadId;
     }
@@ -40,12 +41,13 @@ public class NoteController {
             return "redirect:/api/lead?leadId=" + leadId;
         }
 
-        try {
-            noteService.addNote(leadId, theNote);
-            redirectAttributes.addFlashAttribute("message", "New note has been added successfully!");
-        } catch (Exception e) {
+        if (noteService.addNote(leadId, theNote).getStatusCodeValue() == 500) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
+            return "redirect:/api/lead?leadId=" + leadId;
         }
+
+        noteService.addNote(leadId, theNote);
+        redirectAttributes.addFlashAttribute("message", "New note has been added successfully!");
 
         return "redirect:/api/lead?leadId=" + leadId;
     }

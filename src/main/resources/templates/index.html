@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -67,8 +68,14 @@
 
 
 <div class="container" style="padding-top: 20px;">
+    <div style="float: right; padding-top: 20px;">
+        <form th:action="@{/api/logmeout}" method="GET">
+           <button type="submit" class="btn btn-outline-primary btn-sm text-primary">&nbsp;<span th:text="'Logout: ' + ${principal}"/>&nbsp;</button>
+        </form>
+    </div>
     <a th:href="@{../api}"><img style="float: left;" class="logo" th:src="@{/logo2.png}"/></a>
     <div class="jumbotron bg-white">
+
         <h2 style="margin-right: 140px; color: #185F9E;" class="display-6 text-center">Deal Flow Bus</h2>
         <p style="margin-right: 140px; padding-bottom: 30px;" class="lead text-center">Universal tool to store your investment leads</p>
     </div>
@@ -109,15 +116,25 @@
         <a th:href="@{/api/addForm}" type="button" class="btn btn-outline-primary mb-2">&nbsp;+ Add New Lead&nbsp;</a>
     </div>
 
+    <br>
+    <br>
+
+    <div class="alert alert-success" role="alert" th:if="${message}">
+        <h6 style="float: right;" th:text="${message}"/>
+    </div>
+    <div  class="alert alert-danger" role="alert" th:if="${warning}">
+        <h6 style="float: right;" th:text="${warning}"/>
+    </div>
 </div>
+
 
     <div class="container table-hover table-striped table-borderless">
 
-        <div  class="alert alert-success" role="alert" th:if="${message}">
-            <h6 style="float: right;" th:text="${message}"/>
-        </div>
+
+
         <table id="dtDynamicVerticalScrollExample" class="table mx-auto shadow p-3 mb-5 bg-white rounded" cellspacing="0"
                width="100%">
+
             <thead>
             <tr class="rounded-top">
                 <th style="border-top-left-radius: 5px;" class="th-sm">Project Name</th>
@@ -150,8 +167,11 @@
                     </li>
                 </ul>
             </nav>
+
         </div>
+
     </div>
+
 
     <div class="text-center">
         <p class="text-muted" style="padding-top: 20px;">DealFlowBus 2020</p>

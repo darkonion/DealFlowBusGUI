@@ -2,6 +2,12 @@ spring:
   profiles:
     active: default
 
+  servlet:
+    multipart:
+      max-file-size: 11MB
+      max-request-size: 11MB
+
+
 security:
   oauth2:
     client:
@@ -18,3 +24,24 @@ server:
       cookie:
         name: DFB_SESSION2
   port: 8080
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+
+
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+        timeout:
+          enabled: false
