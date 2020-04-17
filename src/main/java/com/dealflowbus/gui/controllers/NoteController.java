@@ -23,12 +23,9 @@ public class NoteController {
 
         if (noteService.deleteNote(leadId, noteId).equals("warning")) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
-            return "redirect:/api/lead?leadId=" + leadId;
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Note has been removed successfully");
         }
-
-        noteService.deleteNote(leadId, noteId);
-        redirectAttributes.addFlashAttribute("message", "Note has been removed successfully");
-
         return "redirect:/api/lead?leadId=" + leadId;
     }
 
@@ -43,12 +40,9 @@ public class NoteController {
 
         if (noteService.addNote(leadId, theNote).getStatusCodeValue() == 500) {
             redirectAttributes.addFlashAttribute("warning", "Something goes wrong, try again!");
-            return "redirect:/api/lead?leadId=" + leadId;
+        } else {
+            redirectAttributes.addFlashAttribute("message", "New note has been added successfully!");
         }
-
-        noteService.addNote(leadId, theNote);
-        redirectAttributes.addFlashAttribute("message", "New note has been added successfully!");
-
         return "redirect:/api/lead?leadId=" + leadId;
     }
 

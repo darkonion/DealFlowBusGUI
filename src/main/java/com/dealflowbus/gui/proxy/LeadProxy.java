@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient(name = "database-main-reader", url = "http://34.102.169.103", fallback = LeadHystrixClientFallback.class)
+@FeignClient(name = "database-main-reader", url = "${dbURI}", fallback = LeadHystrixClientFallback.class)
 public interface LeadProxy {
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/leads/{id}")

@@ -19,7 +19,8 @@ public class NoteService {
     }
 
     public ResponseEntity<Note> addNote(int leadId, Note note) {
-            return noteProxy.addNote(leadId, note);
+        System.out.println(note);
+        return noteProxy.addNote(leadId, note);
     }
 }
 

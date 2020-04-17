@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@FeignClient(name = "statistics-unit", url = "http://34.102.169.103", fallback = StatisticsHystrixClientFallback.class)
+@FeignClient(name = "statistics-unit", url = "${statsURI}", fallback = StatisticsHystrixClientFallback.class)
 public interface StatisticsProxy {
 
     @RequestMapping(method = RequestMethod.GET, value = "/stats/all")

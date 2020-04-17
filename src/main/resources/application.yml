@@ -1,12 +1,11 @@
 spring:
   profiles:
-    active: default
+    active: testlocal
 
   servlet:
     multipart:
       max-file-size: 11MB
       max-request-size: 11MB
-
 
 security:
   oauth2:
@@ -45,3 +44,7 @@ hystrix:
           strategy: SEMAPHORE
         timeout:
           enabled: false
+
+dbURI: http://34.102.169.103
+statsURI: http://34.102.169.103
+authURI: http://34.102.169.103

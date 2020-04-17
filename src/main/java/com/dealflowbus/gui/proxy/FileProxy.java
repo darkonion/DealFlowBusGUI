@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 
-@FeignClient(name = "database-main-reader-files", url = "http://34.102.169.103")
+@FeignClient(name = "database-main-reader-files", url = "${dbURI}")
 public interface FileProxy {
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/files/{id}")

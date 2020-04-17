@@ -51,18 +51,6 @@ public class SingleLeadController {
         return "leaddetails";
     }
 
-    @RequestMapping("/api/delete")
-    public String deleteLead(@RequestParam("leadId") int leadId,
-            RedirectAttributes redirectAttributes) {
-
-        if(singleLeadService.deleteLeadById(leadId).equals("warning")) {
-            redirectAttributes.addFlashAttribute( "warning", "Server Error, please try again!");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Lead has been deleted successfully!");
-        }
-
-        return "redirect:/api";
-    }
 
     @RequestMapping("/api/addForm")
     public String addLeadForm(Model model) {
@@ -71,6 +59,16 @@ public class SingleLeadController {
 
         return "add-form";
     }
+
+    @RequestMapping("api/updateForm")
+    public String updateLeadForm(Model model, @RequestParam("leadId") int leadId) {
+
+        Lead lead = singleLeadService.getLead(leadId);
+        model.addAttribute("lead", lead);
+
+        return "update-form";
+    }
+
 
     @PostMapping("api/saveLead")
     public String saveLead(@Valid @ModelAttribute("newlead") Lead lead,
@@ -90,14 +88,19 @@ public class SingleLeadController {
         return "redirect:/api";
     }
 
-    @RequestMapping("api/updateForm")
-    public String updateLeadForm(Model model, @RequestParam("leadId") int leadId) {
+    @RequestMapping("/api/delete")
+    public String deleteLead(@RequestParam("leadId") int leadId,
+            RedirectAttributes redirectAttributes) {
 
-        Lead lead = singleLeadService.getLead(leadId);
-        model.addAttribute("lead", lead);
+        if(singleLeadService.deleteLeadById(leadId).equals("warning")) {
+            redirectAttributes.addFlashAttribute( "warning", "Server Error, please try again!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Lead has been deleted successfully!");
+        }
 
-        return "update-form";
+        return "redirect:/api";
     }
+
 
     @RequestMapping("api/updateLead")
     public String updateLead(@Valid @ModelAttribute("lead") Lead lead, BindingResult bindingResult,

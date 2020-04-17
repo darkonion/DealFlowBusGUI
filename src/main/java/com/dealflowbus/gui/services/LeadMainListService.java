@@ -1,11 +1,11 @@
 package com.dealflowbus.gui.services;
 
 import com.dealflowbus.gui.RestResponsePage;
-import com.dealflowbus.gui.config.AccessToken;
 import com.dealflowbus.gui.config.models.Lead;
 import com.dealflowbus.gui.proxy.LeadProxy;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +25,14 @@ public class LeadMainListService {
 
     private final OAuth2RestTemplate restTemplate;
     private final LeadProxy leadProxy;
-    private final AccessToken accessToken;
+
+    @Value("${dbURI}")
+    private String prefix;
 
     public LeadMainListService(@Qualifier("myRestTemplate") OAuth2RestTemplate restTemplate,
-            LeadProxy leadProxy, AccessToken accessToken) {
+            LeadProxy leadProxy) {
         this.restTemplate = restTemplate;
         this.leadProxy = leadProxy;
-        this.accessToken = accessToken;
     }
 
     public List<Integer> getPageList(RestResponsePage<Lead> body) {
@@ -50,7 +51,7 @@ public class LeadMainListService {
         ParameterizedTypeReference<RestResponsePage<Lead>> customerHttpEntity = new ParameterizedTypeReference<>() {};
 
         ResponseEntity<RestResponsePage<Lead>> responseEntity = restTemplate.exchange(
-                "http://34.102.169.103/api/leads?p={page}&filter={filter}",
+                String.format("%s%s", prefix, "/api/leads?p={page}&filter={filter}"),
                 HttpMethod.GET,
                 httpEntity,
                 customerHttpEntity,

@@ -7,12 +7,12 @@ spring:
 security:
   oauth2:
     client:
-      client-id: testgui
+      client-id: webgui
       client-secret: demopass1234
-      user-authorization-uri: http://34.102.169.103/uaa/oauth/authorize
-      access-token-uri:  http://34.102.169.103/uaa/oauth/token
+      user-authorization-uri: http://localhost:9191/uaa/oauth/authorize
+      access-token-uri:  http://localhost:9191/uaa/oauth/token
     resource:
-      token-info-uri: http://34.102.169.103/uaa/oauth/check_token
+      token-info-uri: http://localhost:9191/uaa/oauth/check_token
 
 server:
   servlet:
@@ -42,9 +42,9 @@ hystrix:
         timeout:
           enabled: false
 
-dbURI: http://34.102.169.103
-statsURI: http://34.102.169.103
-authURI: http://34.102.169.103
+dbURI: http://localhost:8081
+statsURI: http://localhost:8100
+authURI: http://localhost:9191
 
 #logging:
 #  level:
