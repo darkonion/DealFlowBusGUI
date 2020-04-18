@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Detail {
 
-    private int id;
+    private int descId;
     private String description;
 
     public Detail() {
