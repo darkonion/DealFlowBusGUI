@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(name = "database-main-reader-files", url = "${dbURI}")
 public interface FileProxy {
 
+
     @RequestMapping(method = RequestMethod.GET, value = "/api/files/{id}")
     byte[] getFile(@PathVariable("id") String id);
 
