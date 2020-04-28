@@ -34,18 +34,11 @@ public class SingleLeadController {
             return "redirect:/api";
         }
 
-        model.addAttribute("lead", lead);
-
-        //temporary
         if (lead.getDetail() == null) {
-            Detail detail = new Detail("empty");
-            model.addAttribute("descr", detail);
-        } else {
-            model.addAttribute("descr", lead.getDetail());
+            lead.setDetail(new Detail("empty"));
         }
 
-        model.addAttribute("notes", lead.getNotes());
-        model.addAttribute("files", lead.getFiles());
+        model.addAttribute("lead", lead);
         model.addAttribute("newnote", new Note());
 
         return "leaddetails";
